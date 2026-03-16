@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Eye, EyeOff, AlertCircle, Lock, Mail } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
+import apcLogo from '../../assets/image.png';
 
 const AgentLogin = () => {
   const navigate = useNavigate();
@@ -81,9 +82,7 @@ const AgentLogin = () => {
         <div className="w-full max-w-md">
           {/* Mobile logo */}
           <div className="flex lg:hidden items-center gap-3 mb-10">
-            <div className="w-10 h-10 bg-[#002C3D] rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-base tracking-widest">APC</span>
-            </div>
+            <img src={apcLogo} alt="APC" className="w-10 h-10 rounded-lg object-cover" />
             <span className="text-[#002C3D] font-bold text-xl">Agent Portal</span>
           </div>
 

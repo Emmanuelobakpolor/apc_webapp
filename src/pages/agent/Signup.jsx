@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import {
   Upload, Info, CheckCircle2, X, Eye, EyeOff, ShieldCheck, AlertCircle,
 } from 'lucide-react';
+import apcLogo from '../../assets/image.png';
 import { cn } from '../../utils/cn';
 import { useAuth } from '../../context/AuthContext';
 
@@ -228,9 +229,7 @@ const AgentSignup = () => {
 
   return (
     <div className="min-h-screen bg-[#F5F7FA] flex flex-col items-center py-12 px-6 font-sans">
-      <div className="w-12 h-12 bg-[#002C3D] rounded-xl flex items-center justify-center mb-8">
-        <span className="text-white font-black text-sm tracking-tight">APC</span>
-      </div>
+      <img src={apcLogo} alt="APC" className="w-12 h-12 rounded-xl object-cover mb-8" />
 
       <div className="w-full max-w-xl bg-white rounded-2xl shadow-soft border border-gray-100 p-8">
         <h2 className="text-xl font-bold text-center text-[#002C3D] mb-8 tracking-tight">Agent Sign-Up</h2>

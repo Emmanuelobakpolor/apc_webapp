@@ -8,6 +8,7 @@ import {
   LogOut,
   X,
 } from 'lucide-react';
+import apcLogo from '../../assets/image.png';
 import { cn } from '../../utils/cn';
 import { useAuth, getInitials } from '../../context/AuthContext';
 
@@ -29,7 +30,7 @@ const Sidebar = ({ onClose }) => {
       {/* Brand */}
       <div className="px-6 pt-7 pb-5 flex items-center justify-between">
         <div>
-          <p className="text-white font-bold text-sm leading-tight">APC Portal</p>
+          <img src={apcLogo} alt="APC" className="w-8 h-8 rounded-lg object-cover" />
           <p className="text-white/35 text-[10px] font-semibold uppercase tracking-widest mt-0.5">Agent Platform</p>
         </div>
         <button

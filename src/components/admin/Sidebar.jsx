@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { LayoutDashboard, Users, Home, UserCircle, LogOut } from 'lucide-react';
+import apcLogo from '../../assets/image.png';
 
 const AdminSidebar = () => {
   const navigate = useNavigate();
@@ -20,9 +21,7 @@ const AdminSidebar = () => {
     <div className="w-56 bg-[#002C3D] text-white flex flex-col flex-shrink-0">
       {/* Logo */}
       <div className="h-16 flex items-center gap-3 px-5 border-b border-white/10">
-        <div className="w-8 h-8 bg-white rounded-lg flex items-center justify-center flex-shrink-0">
-          <span className="text-[#002C3D] font-bold text-sm tracking-widest">APC</span>
-        </div>
+        <img src={apcLogo} alt="APC" className="w-8 h-8 rounded-lg object-cover flex-shrink-0" />
         <span className="font-bold text-sm">Admin Panel</span>
       </div>
 

@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ChevronRight, Building2 } from 'lucide-react';
+import { ChevronRight } from 'lucide-react';
+import apcLogo from '../assets/image.png';
 
 const roles = [
   {
@@ -38,9 +39,7 @@ const LoginSelection = () => {
 
         {/* Logo */}
         <div className="flex items-center gap-2.5 mb-10 self-start lg:self-center">
-          <div className="w-9 h-9 bg-[#002C3D] rounded-xl flex items-center justify-center">
-            <Building2 className="w-5 h-5 text-white" />
-          </div>
+          <img src={apcLogo} alt="APC" className="w-9 h-9 rounded-xl object-cover" />
           <span className="text-[#002C3D] font-bold text-lg">APC Portal</span>
         </div>
 
