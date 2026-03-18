@@ -15,7 +15,7 @@ import {
 import { cn } from '../../utils/cn';
 import { useAuth } from '../../context/AuthContext';
 
-const API = 'http://localhost:8000/api/properties';
+const API = 'https://apc-backend-vj85.onrender.com/api/properties';
 const authHeaders = () => ({ Authorization: `Bearer ${localStorage.getItem('access_token')}` });
 
 const Avatar = ({ name }) => {

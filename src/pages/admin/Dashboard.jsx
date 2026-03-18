@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Users, Home, TrendingUp } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
-const API = 'http://localhost:8000/api';
+const API = 'https://apc-backend-vj85.onrender.com/api';
 
 const adminFetch = (url) =>
   fetch(url, {

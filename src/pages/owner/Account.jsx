@@ -3,7 +3,7 @@ import { Camera, Eye, EyeOff, Bell, Shield, User, Loader2 } from 'lucide-react';
 import { cn } from '../../utils/cn';
 import { useAuth, getInitials, getRoleLabel } from '../../context/AuthContext';
 
-const API = 'http://localhost:8000/api/auth';
+const API = 'https://apc-backend-vj85.onrender.com/api/auth';
 
 const authHeaders = () => ({
   Authorization: `Bearer ${localStorage.getItem('access_token')}`,

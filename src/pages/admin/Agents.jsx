@@ -3,8 +3,8 @@ import { Search, MoreVertical, ArrowLeft, MapPin } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { cn } from '../../utils/cn';
 
-const AUTH_API  = 'http://localhost:8000/api/auth';
-const PROP_API  = 'http://localhost:8000/api/properties';
+const AUTH_API  = 'https://apc-backend-vj85.onrender.com/api/auth';
+const PROP_API  = 'https://apc-backend-vj85.onrender.com/api/properties';
 
 const adminFetch = (url, opts = {}) =>
   fetch(url, {

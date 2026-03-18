@@ -3,7 +3,7 @@ import { Search, MapPin, X, ChevronLeft, ChevronRight, Trash2, Eye } from 'lucid
 import { useNavigate } from 'react-router-dom';
 import { cn } from '../../utils/cn';
 
-const PROP_API = 'http://localhost:8000/api/properties';
+const PROP_API = 'https://apc-backend-vj85.onrender.com/api/properties';
 const ITEMS_PER_PAGE = 6;
 
 const adminFetch = (url, opts = {}) =>

@@ -3,7 +3,7 @@ import { Search, ChevronDown, MoreVertical, ArrowLeft } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { cn } from '../../utils/cn';
 
-const API = 'http://localhost:8000/api/auth';
+const API = 'https://apc-backend-vj85.onrender.com/api/auth';
 
 const adminFetch = (url, opts = {}) =>
   fetch(url, {

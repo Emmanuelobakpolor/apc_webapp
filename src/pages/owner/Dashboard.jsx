@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Building2, MessageSquare, ChevronRight, MapPin, Phone } from 'lucide-react';
 
-const PROP_API = 'http://localhost:8000/api/properties';
+const PROP_API = 'https://apc-backend-vj85.onrender.com/api/properties';
 const authHeaders = () => ({ Authorization: `Bearer ${localStorage.getItem('access_token')}` });
 
 const TYPE_COLORS = {

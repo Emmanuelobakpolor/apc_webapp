@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Search, ArrowLeft, Phone, MessageCircle, MessageSquare, ChevronRight, Trash2, Send } from 'lucide-react';
 import { cn } from '../../utils/cn';
 
-const PROP_API = 'http://localhost:8000/api/properties';
+const PROP_API = 'https://apc-backend-vj85.onrender.com/api/properties';
 const authHeaders = () => ({ Authorization: `Bearer ${localStorage.getItem('access_token')}` });
 const ACCENT = '#476D7C';
 
