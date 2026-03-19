@@ -28,7 +28,7 @@ const AdminLogin = () => {
         setError(data.non_field_errors?.[0] || data.detail || 'Invalid credentials.');
         return;
       }
-      if (data.user?.role !== 'admin') {
+      if (data.user?.role !== 'admin' && data.user?.accountType !== 'admin') {
         setError('This account does not have admin access.');
         return;
       }

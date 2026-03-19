@@ -1,71 +1,68 @@
 import React, { useState } from 'react';
-import { User, Lock, Bell, Shield, Eye, EyeOff } from 'lucide-react';
+import { User, Lock, Bell, Eye, EyeOff } from 'lucide-react';
 import { cn } from '../../utils/cn';
 
 const TABS = [
-  { key: 'profile',       label: 'Profile',           icon: User   },
-  { key: 'security',      label: 'Security',          icon: Lock   },
-  { key: 'notifications', label: 'Notifications',     icon: Bell   },
+  { key: 'profile',       label: 'Profile',       icon: User },
+  { key: 'security',      label: 'Security',      icon: Lock },
+  { key: 'notifications', label: 'Notifications', icon: Bell },
 ];
 
+const getAdminUser = () => {
+  try {
+    return JSON.parse(localStorage.getItem('admin_user')) || {};
+  } catch {
+    return {};
+  }
+};
+
 const ProfileTab = () => {
+  const stored = getAdminUser();
   const [form, setForm] = useState({
-    firstName: 'Eric',
-    lastName:  'Kayser',
-    email:     'admin@apc.com',
-    phone:     '+234 800 000 0001',
+    firstName: stored.first_name || stored.fullName?.split(' ')[0] || 'Admin',
+    lastName:  stored.last_name  || stored.fullName?.split(' ').slice(1).join(' ') || 'User',
+    email:     stored.email      || '',
+    phone:     stored.phone      || stored.phoneNumber || '',
   });
+
+  const initials = `${form.firstName?.[0] || ''}${form.lastName?.[0] || ''}`.toUpperCase() || 'A';
 
   return (
     <div className="space-y-6">
-      {/* Avatar */}
       <div className="flex items-center gap-5">
         <div className="w-20 h-20 rounded-full bg-[#002C3D] flex items-center justify-center text-white text-2xl font-bold flex-shrink-0">
-          {form.firstName[0]}{form.lastName[0]}
+          {initials}
         </div>
         <div>
           <p className="text-sm font-semibold text-gray-900">{form.firstName} {form.lastName}</p>
           <p className="text-xs text-gray-500 mt-0.5">Administrator</p>
-          <button className="mt-2 text-xs text-[#002C3D] font-semibold hover:underline">
-            Change photo
-          </button>
         </div>
       </div>
 
-      {/* Form */}
       <div className="grid grid-cols-2 gap-5">
         <div>
           <label className="label-text">First Name</label>
-          <input
-            value={form.firstName}
+          <input value={form.firstName}
             onChange={e => setForm(f => ({ ...f, firstName: e.target.value }))}
-            className="input-field"
-          />
+            className="input-field" />
         </div>
         <div>
           <label className="label-text">Last Name</label>
-          <input
-            value={form.lastName}
+          <input value={form.lastName}
             onChange={e => setForm(f => ({ ...f, lastName: e.target.value }))}
-            className="input-field"
-          />
+            className="input-field" />
         </div>
         <div>
           <label className="label-text">Email Address</label>
-          <input
-            value={form.email}
+          <input value={form.email}
             onChange={e => setForm(f => ({ ...f, email: e.target.value }))}
-            type="email"
-            className="input-field"
-          />
+            type="email" className="input-field" />
         </div>
         <div>
           <label className="label-text">Phone Number</label>
-          <input
-            value={form.phone}
+          <input value={form.phone}
             onChange={e => setForm(f => ({ ...f, phone: e.target.value }))}
-            className="input-field"
-          />
+            className="input-field" />
         </div>
       </div>
 
@@ -87,16 +84,9 @@ const SecurityTab = () => {
     <div>
       <label className="label-text">{label}</label>
       <div className="relative">
-        <input
-          type={show ? 'text' : 'password'}
-          placeholder="••••••••"
-          className="input-field pr-12"
-        />
-        <button
-          type="button"
-          onClick={onToggle}
-          className="absolute inset-y-0 right-0 pr-4 flex items-center text-gray-400 hover:text-gray-600"
-        >
+        <input type={show ? 'text' : 'password'} placeholder="••••••••" className="input-field pr-12" />
+        <button type="button" onClick={onToggle}
+          className="absolute inset-y-0 right-0 pr-4 flex items-center text-gray-400 hover:text-gray-600">
           {show ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
         </button>
       </div>
@@ -109,9 +99,9 @@ const SecurityTab = () => {
         <h3 className="text-sm font-bold text-gray-900 mb-1">Change Password</h3>
         <p className="text-xs text-gray-500">Make sure your new password is at least 8 characters long.</p>
       </div>
-      <PasswordField label="Current Password"  show={showCurrent} onToggle={() => setShowCurrent(v => !v)} />
-      <PasswordField label="New Password"      show={showNew}     onToggle={() => setShowNew(v => !v)}     />
-      <PasswordField label="Confirm Password"  show={showConfirm} onToggle={() => setShowConfirm(v => !v)} />
+      <PasswordField label="Current Password" show={showCurrent} onToggle={() => setShowCurrent(v => !v)} />
+      <PasswordField label="New Password"     show={showNew}     onToggle={() => setShowNew(v => !v)}     />
+      <PasswordField label="Confirm Password" show={showConfirm} onToggle={() => setShowConfirm(v => !v)} />
       <div className="flex justify-end pt-2">
         <button className="px-6 py-2.5 bg-[#002C3D] text-white text-sm font-semibold rounded-lg hover:bg-[#003F54] transition-colors">
           Update Password
@@ -122,39 +112,25 @@ const SecurityTab = () => {
 };
 
 const Toggle = ({ checked, onChange }) => (
-  <button
-    onClick={() => onChange(!checked)}
-    className={cn(
-      'relative w-10 h-5 rounded-full transition-colors flex-shrink-0',
-      checked ? 'bg-[#002C3D]' : 'bg-gray-200'
-    )}
-  >
-    <span
-      className={cn(
-        'absolute top-0.5 left-0.5 w-4 h-4 rounded-full bg-white shadow transition-transform',
-        checked ? 'translate-x-5' : 'translate-x-0'
-      )}
-    />
+  <button onClick={() => onChange(!checked)}
+    className={cn('relative w-10 h-5 rounded-full transition-colors flex-shrink-0', checked ? 'bg-[#002C3D]' : 'bg-gray-200')}>
+    <span className={cn('absolute top-0.5 left-0.5 w-4 h-4 rounded-full bg-white shadow transition-transform', checked ? 'translate-x-5' : 'translate-x-0')} />
   </button>
 );
 
 const NotificationsTab = () => {
   const [settings, setSettings] = useState({
-    newUser:    true,
-    newAgent:   true,
-    newProperty:false,
-    disputes:   true,
-    reports:    false,
-    systemAlerts:true,
+    newUser: true, newAgent: true, newProperty: false,
+    disputes: true, reports: false, systemAlerts: true,
   });
 
   const items = [
-    { key: 'newUser',      label: 'New User Registration',   desc: 'Get notified when a new user signs up'           },
-    { key: 'newAgent',     label: 'New Agent Registration',  desc: 'Get notified when a new agent is verified'       },
-    { key: 'newProperty',  label: 'New Property Listed',     desc: 'Get notified when a new property is listed'      },
-    { key: 'disputes',     label: 'Disputes & Reports',      desc: 'Get notified about user disputes and reports'    },
-    { key: 'reports',      label: 'Weekly Reports',          desc: 'Receive weekly platform performance reports'     },
-    { key: 'systemAlerts', label: 'System Alerts',           desc: 'Critical system health and security alerts'      },
+    { key: 'newUser',      label: 'New User Registration',  desc: 'Get notified when a new user signs up'          },
+    { key: 'newAgent',     label: 'New Agent Registration', desc: 'Get notified when a new agent is verified'      },
+    { key: 'newProperty',  label: 'New Property Listed',    desc: 'Get notified when a new property is listed'     },
+    { key: 'disputes',     label: 'Disputes & Reports',     desc: 'Get notified about user disputes and reports'   },
+    { key: 'reports',      label: 'Weekly Reports',         desc: 'Receive weekly platform performance reports'    },
+    { key: 'systemAlerts', label: 'System Alerts',          desc: 'Critical system health and security alerts'     },
   ];
 
   return (
@@ -165,10 +141,7 @@ const NotificationsTab = () => {
             <p className="text-sm font-semibold text-gray-800">{item.label}</p>
             <p className="text-xs text-gray-500 mt-0.5">{item.desc}</p>
           </div>
-          <Toggle
-            checked={settings[item.key]}
-            onChange={val => setSettings(s => ({ ...s, [item.key]: val }))}
-          />
+          <Toggle checked={settings[item.key]} onChange={val => setSettings(s => ({ ...s, [item.key]: val }))} />
         </div>
       ))}
     </div>
@@ -178,13 +151,6 @@ const NotificationsTab = () => {
 const AdminAccount = () => {
   const [activeTab, setActiveTab] = useState('profile');
 
-  const renderTab = () => {
-    if (activeTab === 'profile')       return <ProfileTab />;
-    if (activeTab === 'security')      return <SecurityTab />;
-    if (activeTab === 'notifications') return <NotificationsTab />;
-    return null;
-  };
-
   return (
     <div className="space-y-6">
       <div>
@@ -193,21 +159,15 @@ const AdminAccount = () => {
       </div>
 
       <div className="flex gap-6">
-        {/* Sidebar tabs */}
         <div className="w-52 flex-shrink-0 space-y-1">
           {TABS.map(t => {
             const Icon = t.icon;
             return (
-              <button
-                key={t.key}
-                onClick={() => setActiveTab(t.key)}
+              <button key={t.key} onClick={() => setActiveTab(t.key)}
                 className={cn(
                   'w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all text-left',
-                  activeTab === t.key
-                    ? 'bg-[#002C3D] text-white'
-                    : 'text-gray-600 hover:bg-gray-100'
-                )}
-              >
+                  activeTab === t.key ? 'bg-[#002C3D] text-white' : 'text-gray-600 hover:bg-gray-100'
+                )}>
                 <Icon className="w-4 h-4 flex-shrink-0" />
                 {t.label}
               </button>
@@ -215,9 +175,10 @@ const AdminAccount = () => {
           })}
         </div>
 
-        {/* Content */}
         <div className="flex-1 bg-white rounded-xl border border-gray-200 p-6">
-          {renderTab()}
+          {activeTab === 'profile'       && <ProfileTab />}
+          {activeTab === 'security'      && <SecurityTab />}
+          {activeTab === 'notifications' && <NotificationsTab />}
         </div>
       </div>
     </div>

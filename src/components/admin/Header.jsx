@@ -1,7 +1,17 @@
 import React, { useState } from 'react';
 import { Bell, Search, ChevronDown } from 'lucide-react';
 
+const getAdminUser = () => {
+  try { return JSON.parse(localStorage.getItem('admin_user')) || {}; }
+  catch { return {}; }
+};
+
 const AdminHeader = () => {
+  const adminUser = getAdminUser();
+  const displayName = adminUser.fullName || adminUser.full_name ||
+    `${adminUser.first_name || ''} ${adminUser.last_name || ''}`.trim() || 'Admin User';
+  const initials = displayName.split(' ').map(w => w[0]).join('').toUpperCase().slice(0, 2) || 'A';
+
   const [notifications, setNotifications] = useState([
     { id: 1, title: 'New property listed', time: '2 hours ago' },
     { id: 2, title: 'Agent verification pending', time: '5 hours ago' },
@@ -71,17 +81,17 @@ const AdminHeader = () => {
             className="flex items-center gap-3 p-2 hover:bg-gray-100 rounded-lg transition-colors"
           >
             <div className="w-8 h-8 bg-[#002C3D] rounded-full flex items-center justify-center text-white font-medium">
-              A
+              {initials}
             </div>
-            <span className="text-sm font-medium text-gray-700">Admin User</span>
+            <span className="text-sm font-medium text-gray-700">{displayName}</span>
             <ChevronDown className="w-4 h-4 text-gray-400" />
           </button>
 
           {showProfile && (
             <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 z-50">
               <div className="p-4 border-b border-gray-200">
-                <div className="font-medium text-gray-900">Admin User</div>
-                <div className="text-sm text-gray-500">admin@apc.com</div>
+                <div className="font-medium text-gray-900">{displayName}</div>
+                <div className="text-sm text-gray-500">{adminUser.email || ''}</div>
               </div>
               <div className="p-2">
                 <button className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-lg transition-colors">
