@@ -3,8 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Eye, EyeOff, AlertCircle, Lock, Mail } from 'lucide-react';
 import apcLogo from '../../assets/image.png';
 
-const ADMIN_EMAIL    = 'admin@apc.com';
-const ADMIN_PASSWORD = 'admin123';
+const API = 'https://apc-backend-vj85.onrender.com/api/auth';
 
 const AdminLogin = () => {
   const navigate = useNavigate();
@@ -14,21 +13,33 @@ const AdminLogin = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
     setIsLoading(true);
     setError('');
-
-    setTimeout(() => {
-      if (email === ADMIN_EMAIL && password === ADMIN_PASSWORD) {
-        localStorage.setItem('admin_token', 'admin_hardcoded');
-        localStorage.setItem('admin_user', JSON.stringify({ email: ADMIN_EMAIL, accountType: 'admin' }));
-        navigate('/admin/dashboard');
-      } else {
-        setError('Invalid email or password.');
+    try {
+      const res = await fetch(`${API}/login/`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        setError(data.non_field_errors?.[0] || data.detail || 'Invalid credentials.');
+        return;
       }
+      if (data.user?.role !== 'admin') {
+        setError('This account does not have admin access.');
+        return;
+      }
+      localStorage.setItem('admin_token', data.access);
+      localStorage.setItem('admin_user', JSON.stringify(data.user));
+      navigate('/admin/dashboard');
+    } catch {
+      setError('Unable to connect to server. Please try again.');
+    } finally {
       setIsLoading(false);
-    }, 600);
+    }
   };
 
   return (
