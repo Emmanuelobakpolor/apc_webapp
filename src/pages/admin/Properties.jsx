@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Search, MapPin, X, ChevronLeft, ChevronRight, Trash2, Eye } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
 import { cn } from '../../utils/cn';
 
 const PROP_API = 'https://apc-backend-vj85.onrender.com/api/properties';
@@ -109,7 +108,6 @@ const PropertyCard = ({ property, onView, onDelete, deleting }) => (
 );
 
 const AdminProperties = () => {
-  const navigate = useNavigate();
   const [properties, setProperties]         = useState([]);
   const [loading, setLoading]               = useState(true);
   const [search, setSearch]                 = useState('');
@@ -122,14 +120,11 @@ const AdminProperties = () => {
     const params = new URLSearchParams();
     if (search) params.set('search', search);
     adminFetch(`${PROP_API}/admin/all/?${params}`)
-      .then((r) => {
-        if (r.status === 401 || r.status === 403) { navigate('/admin/login'); return null; }
-        return r.json();
-      })
+      .then((r) => r.ok ? r.json() : null)
       .then((data) => { if (data) setProperties(Array.isArray(data) ? data : []); })
       .catch(() => {})
       .finally(() => setLoading(false));
-  }, [search, navigate]);
+  }, [search]);
 
   useEffect(() => { loadProperties(); }, [loadProperties]);
 

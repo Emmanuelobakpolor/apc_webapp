@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Users, Home, TrendingUp } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom'; // still used for quick-action buttons
 
 const API = 'https://apc-backend-vj85.onrender.com/api';
 
@@ -34,14 +34,7 @@ const AdminDashboard = () => {
 
   useEffect(() => {
     adminFetch(`${API}/auth/admin/stats/`)
-      .then((r) => {
-        if (r.status === 401 || r.status === 403) {
-          localStorage.removeItem('admin_token');
-          navigate('/admin/login');
-          return null;
-        }
-        return r.json();
-      })
+      .then((r) => r.ok ? r.json() : null)
       .then((data) => { if (data) setStats(data); })
       .catch(() => {})
       .finally(() => setLoading(false));

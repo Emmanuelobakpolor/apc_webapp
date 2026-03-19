@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Search, ChevronDown, MoreVertical, ArrowLeft } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
 import { cn } from '../../utils/cn';
 
 const API = 'https://apc-backend-vj85.onrender.com/api/auth';
@@ -107,7 +106,6 @@ const TABS = [
 ];
 
 const AdminUsers = () => {
-  const navigate = useNavigate();
   const [users, setUsers]               = useState([]);
   const [loading, setLoading]           = useState(true);
   const [activeTab, setActiveTab]       = useState('all');
@@ -123,14 +121,11 @@ const AdminUsers = () => {
     if (search) params.set('search', search);
 
     adminFetch(`${API}/admin/users/?${params}`)
-      .then((r) => {
-        if (r.status === 401 || r.status === 403) { navigate('/admin/login'); return null; }
-        return r.json();
-      })
+      .then((r) => r.ok ? r.json() : null)
       .then((data) => { if (data) setUsers(data); })
       .catch(() => {})
       .finally(() => setLoading(false));
-  }, [activeTab, search, navigate]);
+  }, [activeTab, search]);
 
   useEffect(() => { loadUsers(); }, [loadUsers]);
 

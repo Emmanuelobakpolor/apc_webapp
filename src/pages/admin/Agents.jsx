@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Search, MoreVertical, ArrowLeft, MapPin } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
 import { cn } from '../../utils/cn';
 
 const AUTH_API  = 'https://apc-backend-vj85.onrender.com/api/auth';
@@ -122,7 +121,6 @@ const AgentDetail = ({ agent, onBack, onToggle, onDelete, actionLoading }) => {
 };
 
 const AdminAgents = () => {
-  const navigate = useNavigate();
   const [agents, setAgents]               = useState([]);
   const [loading, setLoading]             = useState(true);
   const [search, setSearch]               = useState('');
@@ -135,14 +133,11 @@ const AdminAgents = () => {
     const params = new URLSearchParams({ role: 'agent' });
     if (search) params.set('search', search);
     adminFetch(`${AUTH_API}/admin/users/?${params}`)
-      .then((r) => {
-        if (r.status === 401 || r.status === 403) { navigate('/admin/login'); return null; }
-        return r.json();
-      })
+      .then((r) => r.ok ? r.json() : null)
       .then((data) => { if (data) setAgents(data); })
       .catch(() => {})
       .finally(() => setLoading(false));
-  }, [search, navigate]);
+  }, [search]);
 
   useEffect(() => { loadAgents(); }, [loadAgents]);
 
