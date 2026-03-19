@@ -265,31 +265,56 @@ const Inquiries = () => {
                 <div className="flex items-center justify-center py-10">
                   <div className="w-6 h-6 border-[3px] border-gray-200 border-t-[#002C3D] rounded-full animate-spin" />
                 </div>
-              ) : replies.length === 0 ? (
-                <div className="flex flex-col items-center justify-center py-10 text-center">
-                  <MessageSquare className="w-7 h-7 text-gray-200 mb-2" />
-                  <p className="text-sm text-gray-400 font-medium">No replies yet</p>
-                  <p className="text-xs text-gray-300 mt-1">Start the conversation below.</p>
-                </div>
               ) : (
-                replies.map((reply) => (
-                  <div key={reply.id} className="flex justify-end group">
-                    <div className="relative max-w-[78%]">
-                      <div className="rounded-2xl rounded-tr-sm px-4 py-2.5 text-sm text-white" style={{ backgroundColor: ACCENT }}>
-                        <p className="leading-relaxed">{reply.message}</p>
+                <>
+                  {/* Original inquiry message — always shown first */}
+                  {selectedInquiry.message ? (
+                    <div className="flex justify-start">
+                      <div className="max-w-[78%] bg-gray-100 rounded-2xl rounded-tl-sm px-4 py-2.5 text-sm text-gray-800">
+                        <p className="leading-relaxed">{selectedInquiry.message}</p>
                         <div className="flex items-center justify-between gap-3 mt-1.5">
-                          <span className="text-[10px] text-white/60 font-medium">{reply.sender_name}</span>
-                          <span className="text-[10px] text-white/50">{timeAgo(reply.created_at)}</span>
+                          <span className="text-[10px] text-gray-400 font-medium">{selectedInquiry.name}</span>
+                          <span className="text-[10px] text-gray-400">{timeAgo(selectedInquiry.created_at)}</span>
                         </div>
                       </div>
-                      <button
-                        onClick={() => deleteReply(reply.id)}
-                        className="absolute -left-8 top-1/2 -translate-y-1/2 w-6 h-6 flex items-center justify-center text-red-400 hover:text-red-600 opacity-0 group-hover:opacity-100 transition-all">
-                        <Trash2 className="w-3.5 h-3.5" />
-                      </button>
                     </div>
-                  </div>
-                ))
+                  ) : null}
+
+                  {/* Replies */}
+                  {replies.length === 0 && !selectedInquiry.message && (
+                    <div className="flex flex-col items-center justify-center py-10 text-center">
+                      <MessageSquare className="w-7 h-7 text-gray-200 mb-2" />
+                      <p className="text-sm text-gray-400 font-medium">No messages yet</p>
+                      <p className="text-xs text-gray-300 mt-1">Start the conversation below.</p>
+                    </div>
+                  )}
+
+                  {replies.map((reply) => {
+                    const isOwn = reply.sender_name !== selectedInquiry.name;
+                    return (
+                      <div key={reply.id} className={cn('flex group', isOwn ? 'justify-end' : 'justify-start')}>
+                        <div className="relative max-w-[78%]">
+                          <div className={cn('rounded-2xl px-4 py-2.5 text-sm', isOwn
+                            ? 'rounded-tr-sm text-white'
+                            : 'rounded-tl-sm bg-gray-100 text-gray-800'
+                          )} style={isOwn ? { backgroundColor: ACCENT } : {}}>
+                            <p className="leading-relaxed">{reply.message}</p>
+                            <div className="flex items-center justify-between gap-3 mt-1.5">
+                              <span className={cn('text-[10px] font-medium', isOwn ? 'text-white/60' : 'text-gray-400')}>{reply.sender_name}</span>
+                              <span className={cn('text-[10px]', isOwn ? 'text-white/50' : 'text-gray-400')}>{timeAgo(reply.created_at)}</span>
+                            </div>
+                          </div>
+                          {isOwn && (
+                            <button onClick={() => deleteReply(reply.id)}
+                              className="absolute -left-8 top-1/2 -translate-y-1/2 w-6 h-6 flex items-center justify-center text-red-400 hover:text-red-600 opacity-0 group-hover:opacity-100 transition-all">
+                              <Trash2 className="w-3.5 h-3.5" />
+                            </button>
+                          )}
+                        </div>
+                      </div>
+                    );
+                  })}
+                </>
               )}
               <div ref={chatEndRef} />
             </div>
