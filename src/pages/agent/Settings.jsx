@@ -322,9 +322,8 @@ const Settings = () => {
       <SectionCard title="Notifications" subtitle="Choose how you receive updates" icon={Bell}>
         <div className="space-y-5">
           {[
-            { key: 'email',     label: 'Email notifications',   desc: 'Receive updates and alerts via email'       },
-            { key: 'sms',       label: 'SMS notifications',     desc: 'Get important alerts sent to your phone'    },
-            { key: 'inquiries', label: 'New inquiry alerts',    desc: 'Be notified instantly when someone inquires' },
+            { key: 'in-app',     label: 'In-app notifications',   desc: 'Receive updates and alerts in the app'       },
+            
           ].map(({ key, label, desc }) => (
             <div key={key} className="flex items-center justify-between">
               <div>

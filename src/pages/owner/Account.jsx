@@ -301,12 +301,10 @@ const Account = () => {
         </div>
       </SectionCard>
 
-      <SectionCard title="Notifications" subtitle="Choose how you receive updates" icon={Bell}>
+      <SectionCard title="Notifications" subtitle="" icon={Bell}>
         <div className="space-y-5">
           {[
-            { key: 'email', label: 'Email notifications',  desc: 'Receive updates and alerts via email'    },
-            { key: 'sms',   label: 'SMS notifications',    desc: 'Get important alerts sent to your phone' },
-            { key: 'rent',  label: 'Rent due reminders',   desc: 'Be reminded when tenant rent is due'     },
+            { key: 'in-app',     label: 'In-app notifications',   desc: 'Receive updates and alerts in the app'       },
           ].map(({ key, label, desc }) => (
             <div key={key} className="flex items-center justify-between">
               <div>
