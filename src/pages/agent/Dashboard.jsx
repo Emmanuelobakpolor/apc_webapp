@@ -66,6 +66,77 @@ const StatCard = ({ title, value, change, icon: Icon, accent, loading }) => (
   </div>
 );
 
+const TYPE_COLORS = {
+  apartment: '#002C3D',
+  villa:     '#476D7C',
+  duplex:    '#6B99A8',
+  bungalow:  '#8FB5BF',
+  studio:    '#A8CAD4',
+  land:      '#C5DEE3',
+};
+
+const PropertyMixChart = ({ properties }) => {
+  const counts = {};
+  properties.forEach(p => {
+    const t = (p.property_type || 'other').toLowerCase();
+    counts[t] = (counts[t] || 0) + 1;
+  });
+  const total = properties.length;
+  const entries = Object.entries(counts).sort((a, b) => b[1] - a[1]);
+
+  if (entries.length === 0) {
+    return (
+      <div className="flex flex-col items-center justify-center py-10 text-gray-400">
+        <Home className="w-8 h-8 mb-2 opacity-30" />
+        <p className="text-sm font-medium">No properties yet</p>
+      </div>
+    );
+  }
+
+  let cum = 0;
+  const segments = entries.map(([type, count]) => {
+    const pct = (count / total) * 100;
+    const color = TYPE_COLORS[type] || '#94A3B8';
+    const seg = { type, count, pct, color, start: cum };
+    cum += pct;
+    return seg;
+  });
+  const gradient = segments.map(s => `${s.color} ${s.start}% ${s.start + s.pct}%`).join(', ');
+
+  return (
+    <div className="flex flex-col sm:flex-row items-center gap-8">
+      {/* Donut */}
+      <div className="relative flex-shrink-0 w-36 h-36">
+        <div
+          className="w-full h-full rounded-full"
+          style={{ background: `conic-gradient(${gradient})` }}
+        />
+        <div className="absolute inset-0 flex items-center justify-center">
+          <div className="w-[86px] h-[86px] rounded-full bg-white flex flex-col items-center justify-center">
+            <span className="text-2xl font-bold text-[#002C3D] leading-none">{total}</span>
+            <span className="text-[10px] text-gray-400 font-medium mt-0.5">listings</span>
+          </div>
+        </div>
+      </div>
+
+      {/* Legend */}
+      <div className="flex-1 grid grid-cols-2 gap-3 w-full">
+        {segments.map(s => (
+          <div key={s.type} className="flex items-center gap-2.5 p-2.5 rounded-xl bg-gray-50 hover:bg-gray-100/80 transition-colors">
+            <div className="w-3 h-3 rounded-sm flex-shrink-0" style={{ backgroundColor: s.color }} />
+            <div className="min-w-0">
+              <p className="text-xs font-semibold text-gray-700 capitalize truncate">{s.type}</p>
+              <p className="text-[11px] text-gray-400">
+                {s.count} &middot; {Math.round(s.pct)}%
+              </p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
 const formatPrice = (price) =>
   Number(price).toLocaleString('en-NG', { style: 'currency', currency: 'NGN', maximumFractionDigits: 0 });
 
@@ -219,6 +290,22 @@ const Dashboard = () => {
               );
             })}
           </div>
+        </div>
+      </div>
+
+      {/* Property Mix */}
+      <div className="bg-white rounded-2xl border border-gray-100 shadow-card overflow-hidden">
+        <div className="flex items-center justify-between px-6 py-5 border-b border-gray-50">
+          <div>
+            <h2 className="text-sm font-bold text-[#002C3D]">Property Mix</h2>
+            <p className="text-xs text-gray-400 mt-0.5">Breakdown of your listings by type</p>
+          </div>
+          <span className="text-[11px] font-semibold text-[#476D7C] bg-[#EEF5F8] px-3 py-1 rounded-full">
+            {properties.length} total
+          </span>
+        </div>
+        <div className="px-6 py-6">
+          <PropertyMixChart properties={properties} />
         </div>
       </div>
 
