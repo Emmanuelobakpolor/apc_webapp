@@ -126,26 +126,62 @@ const Dashboard = () => {
       </div>
 
       {/* Portfolio Overview */}
-      <div className="bg-white rounded-2xl border border-gray-100 shadow-card overflow-hidden">
-        <div className="px-6 py-5 border-b border-gray-50 flex items-center justify-between">
-          <div>
-            <h2 className="text-sm font-bold text-[#002C3D]">Portfolio Overview</h2>
-            <p className="text-xs text-gray-400 mt-0.5">Properties by type</p>
-          </div>
-          <div className="flex items-center gap-2">
-            <span className="text-[11px] font-semibold bg-emerald-50 text-emerald-600 border border-emerald-100 px-2.5 py-1 rounded-full">
-              {availableCount} Available
-            </span>
-            <span className="text-[11px] font-semibold bg-gray-100 text-gray-500 border border-gray-200 px-2.5 py-1 rounded-full">
-              {soldCount} Sold
-            </span>
-          </div>
-        </div>
-        <div className="px-6 py-5">
-          <PortfolioChart properties={allProperties} />
+<div className="relative overflow-hidden rounded-3xl border border-slate-200/70 bg-white shadow-[0_10px_40px_rgba(2,12,27,0.06)]">
+  {/* Soft background accents */}
+  <div className="pointer-events-none absolute -top-16 -right-16 h-40 w-40 rounded-full bg-cyan-100/40 blur-3xl" />
+  <div className="pointer-events-none absolute -bottom-20 -left-10 h-40 w-40 rounded-full bg-emerald-100/40 blur-3xl" />
+
+  {/* Header */}
+  <div className="relative flex flex-col gap-4 border-b border-slate-100 px-6 py-6 md:flex-row md:items-center md:justify-between">
+    <div className="space-y-1">
+      <div className="inline-flex items-center gap-2 rounded-full border border-cyan-100 bg-cyan-50 px-3 py-1 text-[11px] font-semibold uppercase tracking-wide text-cyan-700">
+        <span className="h-2 w-2 rounded-full bg-cyan-500" />
+        Portfolio Summary
+      </div>
+
+      <h2 className="text-xl font-bold tracking-tight text-slate-900">
+        Portfolio Overview
+      </h2>
+
+      <p className="text-sm text-slate-500">
+        A quick breakdown of your properties by type and status.
+      </p>
+    </div>
+
+    <div className="flex flex-wrap items-center gap-3">
+      <div className="min-w-[110px] rounded-2xl border border-emerald-100 bg-emerald-50 px-4 py-3 shadow-sm">
+        <p className="text-[11px] font-semibold uppercase tracking-wide text-emerald-600">
+          Available
+        </p>
+        <div className="mt-1 flex items-end gap-1">
+          <span className="text-2xl font-bold text-emerald-700">
+            {availableCount}
+          </span>
+          <span className="mb-1 text-xs text-emerald-500">Properties</span>
         </div>
       </div>
 
+      <div className="min-w-[110px] rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 shadow-sm">
+        <p className="text-[11px] font-semibold uppercase tracking-wide text-slate-500">
+          Sold
+        </p>
+        <div className="mt-1 flex items-end gap-1">
+          <span className="text-2xl font-bold text-slate-700">
+            {soldCount}
+          </span>
+          <span className="mb-1 text-xs text-slate-400">Properties</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {/* Chart section */}
+  <div className="relative px-6 py-6">
+    <div className="rounded-3xl border border-slate-100 bg-gradient-to-br from-slate-50 via-white to-cyan-50/40 p-4 md:p-5">
+      <PortfolioChart properties={allProperties} />
+    </div>
+  </div>
+</div>
       {/* Bottom Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
 
