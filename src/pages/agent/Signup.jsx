@@ -269,7 +269,6 @@ const AgentSignup = () => {
                 <select className={cn('input-field', SELECT_ARROW)} value={formData.id_type} onChange={set('id_type')}>
                   <option value="">Select ID type</option>
                   <option value="nin">NIN — National Identity Number</option>
-                  <option value="bvn">BVN — Bank Verification Number</option>
                   <option value="passport">International Passport</option>
                   <option value="drivers_license">Driver's License</option>
                   <option value="voters_card">Voter's Card</option>
@@ -281,7 +280,6 @@ const AgentSignup = () => {
                   {formData.id_type
                     ? {
                         nin: 'NIN Number',
-                        bvn: 'BVN Number',
                         passport: 'Passport Number',
                         drivers_license: "Driver's License Number",
                         voters_card: "Voter's Card Number",
