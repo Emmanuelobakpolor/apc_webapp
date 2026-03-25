@@ -37,6 +37,7 @@ const AgentSignup = () => {
     full_name: '',
     gender: '',
     nationality: '',
+    id_type: '',
     government_id_number: '',
     cac_document: null,
     phone_number: '',
@@ -264,8 +265,38 @@ const AgentSignup = () => {
                 </select>
               </div>
               <div>
-                <label className="label-text">Government ID Number</label>
-                <input type="text" placeholder="Enter ID number" className="input-field" value={formData.government_id_number} onChange={set('government_id_number')} />
+                <label className="label-text">ID Type</label>
+                <select className={cn('input-field', SELECT_ARROW)} value={formData.id_type} onChange={set('id_type')}>
+                  <option value="">Select ID type</option>
+                  <option value="nin">NIN — National Identity Number</option>
+                  <option value="bvn">BVN — Bank Verification Number</option>
+                  <option value="passport">International Passport</option>
+                  <option value="drivers_license">Driver's License</option>
+                  <option value="voters_card">Voter's Card</option>
+                  <option value="tax_id">Tax Identification Number (TIN)</option>
+                </select>
+              </div>
+              <div>
+                <label className="label-text">
+                  {formData.id_type
+                    ? {
+                        nin: 'NIN Number',
+                        bvn: 'BVN Number',
+                        passport: 'Passport Number',
+                        drivers_license: "Driver's License Number",
+                        voters_card: "Voter's Card Number",
+                        tax_id: 'Tax ID Number',
+                      }[formData.id_type]
+                    : 'ID Number'}
+                </label>
+                <input
+                  type="text"
+                  placeholder={formData.id_type ? 'Enter ID number' : 'Select an ID type first'}
+                  className="input-field"
+                  disabled={!formData.id_type}
+                  value={formData.government_id_number}
+                  onChange={set('government_id_number')}
+                />
               </div>
               <div>
                 <label className="label-text">Upload CAC Document</label>
