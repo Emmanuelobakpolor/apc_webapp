@@ -72,7 +72,7 @@ const Sidebar = ({ onClose }) => {
       <div className="mx-5 h-px bg-white/10 flex-shrink-0" />
 
       {/* Navigation — scrollable */}
-      <nav className="flex-1 overflow-y-auto px-4 py-5 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-white/10">
+      <nav className="flex-1 overflow-y-auto px-4 py-5 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
         <p className="px-3 mb-3 text-[11px] font-semibold uppercase tracking-[0.18em] text-white/35">
           Navigation
         </p>
