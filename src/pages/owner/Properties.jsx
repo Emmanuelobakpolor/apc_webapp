@@ -236,7 +236,12 @@ const Properties = () => {
   };
 
   const handleAddSubmit = async () => {
-    setAddError(''); setIsSubmitting(true);
+    setAddError('');
+    if (!ownershipDoc) {
+      setAddError('Proof of ownership document is required. Please upload a valid document to continue.');
+      return;
+    }
+    setIsSubmitting(true);
     try {
       const res = await fetch(`${API}/`, { method: 'POST', headers: authHeaders(), body: buildFormData(true) });
       const data = await res.json();
@@ -472,8 +477,8 @@ const Properties = () => {
                     </div>
                   </div>
                   <div>
-                    <p className="label-text mb-3">Proof of Ownership</p>
-                    <label className="border-2 border-dashed border-gray-200 rounded-xl flex items-center gap-3 p-4 bg-gray-50 hover:bg-gray-100/60 hover:border-gray-300 cursor-pointer transition-all">
+                    <p className="label-text mb-3">Proof of Ownership <span className="text-red-500">*</span></p>
+                    <label className={cn('border-2 border-dashed rounded-xl flex items-center gap-3 p-4 bg-gray-50 hover:bg-gray-100/60 cursor-pointer transition-all', ownershipDoc ? 'border-emerald-300 bg-emerald-50/40' : 'border-gray-200 hover:border-gray-300')}>
                       <div className="w-9 h-9 rounded-xl bg-white shadow-card flex items-center justify-center flex-shrink-0">
                         <Upload className="w-4 h-4 text-gray-400" />
                       </div>

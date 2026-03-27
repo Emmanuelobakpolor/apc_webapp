@@ -71,7 +71,14 @@ const AgentSignup = () => {
         body: JSON.stringify({ email: formData.email }),
       });
       const data = await res.json();
-      if (!res.ok) throw new Error(data.email?.[0] || data.detail || 'Failed to send OTP.');
+      if (!res.ok) {
+        const msg = data.email?.[0] || data.detail || 'Failed to send OTP.';
+        throw new Error(
+          msg.toLowerCase().includes('exist') || msg.toLowerCase().includes('already') || msg.toLowerCase().includes('registered')
+            ? 'This email is already registered under another role (Landlord or Tenant). Each role requires a unique email address.'
+            : msg
+        );
+      }
       setCurrentStep(3);
       startTimer();
     } catch (err) {
@@ -343,6 +350,7 @@ const AgentSignup = () => {
                   <div>
                     <label className="label-text">Email Address</label>
                     <input type="email" placeholder="Enter email" className="input-field" value={formData.email} onChange={set('email')} />
+                    <p className="text-[11px] text-gray-400 mt-1">Each role (Landlord, Agent, Tenant) must use a unique email address.</p>
                   </div>
                   <div>
                     <label className="label-text">Residential / Office Address</label>
