@@ -28,7 +28,7 @@ const Sidebar = ({ onClose }) => {
   return (
     <aside className="w-[280px] h-screen bg-gradient-to-b from-[#032B3A] via-[#022635] to-[#011C27] text-white flex flex-col border-r border-white/10 shadow-2xl overflow-hidden">
       {/* Top section */}
-      <div className="px-5 pt-6 pb-4">
+      <div className="px-5 pt-6 pb-4 flex-shrink-0">
         <div className="flex items-start justify-between">
           <div className="flex items-center gap-3">
             <div className="w-11 h-11 rounded-2xl bg-white/10 border border-white/10 flex items-center justify-center shadow-lg backdrop-blur-sm overflow-hidden">
@@ -70,10 +70,10 @@ const Sidebar = ({ onClose }) => {
       </div>
 
       {/* Divider */}
-      <div className="mx-5 h-px bg-white/10" />
+      <div className="mx-5 h-px bg-white/10 flex-shrink-0" />
 
       {/* Navigation */}
-      <nav className="flex-1 px-4 py-5">
+      <nav className="flex-1 overflow-y-auto px-4 py-5 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-white/10">
         <p className="px-3 mb-3 text-[11px] font-semibold uppercase tracking-[0.18em] text-white/35">
           Navigation
         </p>
@@ -138,7 +138,7 @@ const Sidebar = ({ onClose }) => {
       </nav>
 
       {/* Bottom section */}
-      <div className="px-4 pb-5">
+      <div className="px-4 pb-5 flex-shrink-0">
         <div className="h-px bg-white/10 mb-4" />
 
         <div className="rounded-2xl border border-white/10 bg-white/6 p-3 backdrop-blur-sm">
