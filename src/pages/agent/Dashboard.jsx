@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   Plus,
@@ -37,7 +37,7 @@ const Avatar = ({ name }) => {
 
 const StatCard = ({ title, value, change, icon: Icon, accent, loading }) => (
   <div className={cn(
-    'flex-1 min-w-[210px] p-6 rounded-2xl border transition-all hover:shadow-md cursor-pointer',
+    'p-5 sm:p-6 rounded-2xl border transition-all hover:shadow-md cursor-pointer',
     accent ? 'bg-[#002C3D] border-transparent' : 'bg-white border-gray-100'
   )}>
     <div className="flex items-start justify-between mb-5">
@@ -200,7 +200,7 @@ const Dashboard = () => {
     <div className="max-w-[1400px] mx-auto space-y-7 animate-in fade-in duration-700">
 
       {/* Page Header */}
-      <div className="flex items-start justify-between">
+      <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
         <div>
           <p className="text-xs text-gray-400 font-medium mb-1 uppercase tracking-wider">{today}</p>
           <h1 className="text-2xl font-bold text-[#002C3D] tracking-tight">Good morning{firstName ? `, ${firstName}` : ''} 👋</h1>
@@ -208,7 +208,7 @@ const Dashboard = () => {
         </div>
         <button
           onClick={() => navigate('/agent/properties')}
-          className="flex items-center gap-2 px-5 py-2.5 bg-[#002C3D] text-white rounded-xl text-sm font-semibold hover:bg-[#003F54] transition-all shadow-sm mt-1"
+          className="self-start flex items-center gap-2 px-5 py-2.5 bg-[#002C3D] text-white rounded-xl text-sm font-semibold hover:bg-[#003F54] transition-all shadow-sm"
         >
           <Plus className="w-4 h-4" />
           List Property
@@ -216,7 +216,7 @@ const Dashboard = () => {
       </div>
 
       {/* Stat Cards */}
-      <div className="flex gap-4 overflow-x-auto pb-1">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         {stats.map((stat, idx) => (
           <StatCard key={idx} {...stat} loading={loading} />
         ))}

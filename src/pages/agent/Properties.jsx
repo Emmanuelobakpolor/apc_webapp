@@ -337,18 +337,18 @@ const Properties = () => {
     <div className="max-w-[1400px] mx-auto space-y-7 animate-in fade-in duration-700">
 
       {/* Header */}
-      <div className="flex items-start justify-between gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
         <div>
           <h1 className="text-2xl font-bold text-[#002C3D] tracking-tight">My Properties</h1>
           <p className="text-sm text-gray-400 mt-0.5">
             {loading ? 'Loading...' : `${properties.length} listing${properties.length !== 1 ? 's' : ''}`}
           </p>
         </div>
-        <div className="flex items-center gap-3">
-          <div className="relative">
+        <div className="flex flex-wrap items-center gap-2">
+          <div className="relative flex-1 sm:flex-none">
             <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
             <input type="text" value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Search properties…"
-              className="pl-10 pr-4 py-2 bg-white border border-gray-100 rounded-xl text-sm text-gray-600 placeholder:text-gray-400 focus:outline-none focus:border-gray-200 transition-all shadow-card w-56" />
+              className="w-full sm:w-52 pl-10 pr-4 py-2 bg-white border border-gray-100 rounded-xl text-sm text-gray-600 placeholder:text-gray-400 focus:outline-none focus:border-gray-200 transition-all shadow-card" />
           </div>
           <button onClick={() => setIsFilterOpen(true)} className="flex items-center gap-2 px-4 py-2 bg-white text-gray-600 border border-gray-100 rounded-xl text-sm font-semibold hover:bg-gray-50 transition-all shadow-card">
             <SlidersHorizontal className="w-4 h-4" /> Filter

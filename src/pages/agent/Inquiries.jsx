@@ -135,21 +135,21 @@ const Inquiries = () => {
     <div className="max-w-[1400px] mx-auto space-y-7 animate-in fade-in duration-700">
 
       {/* Header */}
-      <div className="flex items-start justify-between gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
         <div>
           <h1 className="text-2xl font-bold text-[#002C3D] tracking-tight">Inquiries</h1>
           <p className="text-sm text-gray-400 mt-0.5">
             {newCount > 0 ? `${newCount} new inquir${newCount === 1 ? 'y' : 'ies'} waiting for a response` : 'All inquiries up to date'}
           </p>
         </div>
-        <div className="relative">
+        <div className="relative w-full sm:w-52">
           <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
           <input
             type="text"
             placeholder="Search inquiries…"
             value={search}
             onChange={e => setSearch(e.target.value)}
-            className="pl-10 pr-4 py-2 bg-white border border-gray-100 rounded-xl text-sm placeholder:text-gray-400 focus:outline-none focus:border-gray-200 transition-all shadow-card w-52"
+            className="w-full pl-10 pr-4 py-2 bg-white border border-gray-100 rounded-xl text-sm placeholder:text-gray-400 focus:outline-none focus:border-gray-200 transition-all shadow-card"
           />
         </div>
       </div>

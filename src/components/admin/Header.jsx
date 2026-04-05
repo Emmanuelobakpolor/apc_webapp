@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Bell, Search, ChevronDown } from 'lucide-react';
+import { Bell, Search, ChevronDown, Menu } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 const AUTH_API = 'https://apc-backend-vj85.onrender.com/api/auth';
@@ -23,7 +23,7 @@ const timeAgo = (dateStr) => {
   return `${days}d ago`;
 };
 
-const AdminHeader = () => {
+const AdminHeader = ({ onMenuClick }) => {
   const navigate    = useNavigate();
   const adminUser   = getAdminUser();
   const displayName = adminUser.fullName || adminUser.full_name ||
@@ -75,15 +75,26 @@ const AdminHeader = () => {
   };
 
   return (
-    <header className="h-16 bg-white border-b border-gray-200 flex items-center justify-between px-6 shadow-sm">
+    <header className="h-16 bg-white border-b border-gray-200 flex items-center justify-between px-4 sm:px-6 shadow-sm gap-3">
+      {/* Hamburger — mobile only */}
+      <button
+        onClick={onMenuClick}
+        className="lg:hidden w-9 h-9 flex items-center justify-center rounded-xl text-gray-500 hover:bg-gray-100 hover:text-gray-700 transition-all flex-shrink-0"
+      >
+        <Menu className="w-5 h-5" />
+      </button>
+
       {/* Search */}
-      <div className="flex-1 max-w-lg">
+      <div className="flex-1 max-w-lg hidden sm:block">
         <div className="relative">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
           <input type="text" placeholder="Search for anything..."
             className="w-full pl-10 pr-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#002C3D] focus:border-transparent outline-none transition-all" />
         </div>
       </div>
+
+      {/* Spacer on mobile */}
+      <div className="flex-1 sm:hidden" />
 
       <div className="flex items-center gap-4">
         {/* Bell */}

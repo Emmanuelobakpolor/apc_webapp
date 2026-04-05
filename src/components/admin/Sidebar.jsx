@@ -1,4 +1,3 @@
-import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import {
   LayoutDashboard,
@@ -8,10 +7,11 @@ import {
   LogOut,
   ChevronRight,
   ShieldCheck,
+  X,
 } from 'lucide-react';
 import apcLogo from '../../assets/image.png';
 
-const AdminSidebar = () => {
+const AdminSidebar = ({ onClose }) => {
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -26,24 +26,32 @@ const AdminSidebar = () => {
   const handleLogout = () => navigate('/admin/login');
 
   return (
-    <aside className="w-[270px] min-h-screen bg-gradient-to-b from-[#032B3A] via-[#022635] to-[#011C27] text-white flex flex-col border-r border-white/10 shadow-2xl">
+    <aside className="w-[270px] h-screen bg-gradient-to-b from-[#032B3A] via-[#022635] to-[#011C27] text-white flex flex-col border-r border-white/10 shadow-2xl overflow-hidden">
       {/* Top Brand Section */}
-      <div className="px-5 pt-6 pb-5">
-        <div className="flex items-center gap-3">
-          <div className="w-11 h-11 rounded-2xl bg-white/10 border border-white/10 flex items-center justify-center overflow-hidden shadow-lg">
-            <img
-              src={apcLogo}
-              alt="APC"
-              className="w-8 h-8 rounded-lg object-cover"
-            />
-          </div>
+      <div className="px-5 pt-6 pb-5 flex-shrink-0">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="w-11 h-11 rounded-2xl bg-white/10 border border-white/10 flex items-center justify-center overflow-hidden shadow-lg">
+              <img
+                src={apcLogo}
+                alt="APC"
+                className="w-8 h-8 rounded-lg object-cover"
+              />
+            </div>
 
-          <div>
-            <h1 className="text-[16px] font-semibold tracking-wide">APC</h1>
-            <p className="text-white/45 text-[11px] uppercase tracking-[0.18em] font-medium">
-              Admin Panel
-            </p>
+            <div>
+              <h1 className="text-[16px] font-semibold tracking-wide">APC</h1>
+              <p className="text-white/45 text-[11px] uppercase tracking-[0.18em] font-medium">
+                Admin Panel
+              </p>
+            </div>
           </div>
+          <button
+            onClick={onClose}
+            className="lg:hidden w-9 h-9 rounded-xl flex items-center justify-center text-white/50 hover:text-white hover:bg-white/10 transition-all"
+          >
+            <X className="w-4 h-4" />
+          </button>
         </div>
 
         {/* Admin Info Card */}
@@ -63,7 +71,7 @@ const AdminSidebar = () => {
       <div className="mx-5 h-px bg-white/10" />
 
       {/* Navigation */}
-      <nav className="flex-1 px-4 py-5">
+      <nav className="flex-1 overflow-y-auto px-4 py-5 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
         <p className="px-3 mb-3 text-[11px] font-semibold uppercase tracking-[0.18em] text-white/35">
           Main Menu
         </p>
@@ -113,7 +121,7 @@ const AdminSidebar = () => {
       </nav>
 
       {/* Bottom Logout */}
-      <div className="px-4 pb-5">
+      <div className="px-4 pb-5 flex-shrink-0">
         <div className="h-px bg-white/10 mb-4" />
 
         <div className="rounded-2xl border border-white/10 bg-white/6 p-3">

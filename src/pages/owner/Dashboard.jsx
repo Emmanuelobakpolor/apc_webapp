@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Building2, MessageSquare, ChevronRight, MapPin, Phone } from 'lucide-react';
 
@@ -40,7 +40,7 @@ const PortfolioChart = ({ properties }) => {
 };
 
 const StatCard = ({ title, value, icon: Icon }) => (
-  <div className="flex-1 min-w-[150px] bg-white rounded-2xl border border-gray-100 shadow-card p-5 flex flex-col items-center gap-3">
+  <div className="bg-white rounded-2xl border border-gray-100 shadow-card p-5 flex flex-col items-center gap-3">
     <div className="w-10 h-10 rounded-xl bg-[#EEF5F8] flex items-center justify-center">
       <Icon className="w-5 h-5 text-[#002C3D]" />
     </div>
@@ -119,8 +119,8 @@ const Dashboard = () => {
   return (
     <div className="max-w-[1400px] mx-auto space-y-6 animate-in fade-in duration-700">
 
-      {/* Stat Cards — removed Total Tenants */}
-      <div className="flex gap-4 overflow-x-auto pb-1">
+      {/* Stat Cards */}
+      <div className="grid grid-cols-2 gap-4">
         <StatCard title="Total Properties" value={totalProperties} icon={Building2}     />
         <StatCard title="Total Inquiries"  value={totalInquiries} icon={MessageSquare} />
       </div>
